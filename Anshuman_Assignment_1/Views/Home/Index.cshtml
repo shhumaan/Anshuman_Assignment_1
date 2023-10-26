@@ -1,9 +1,39 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@model Anshuman_Assignment_1.Models.PriceQuote
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="jumbotron text-center bg-danger text-white" style="font-size: 4rem;">
+    <h1><i class="fas fa-money-bill-alt"></i> Price Quotation</h1>
 </div>
 
+<div class="container">
+    <form method="post" action="/Home/Calculate" class="px-3 py-5">
+        <div class="form-group row">
+            <label for="SalesTotal" class="col-sm-2 col-form-label">Sales Total:</label>
+            <div class="col-sm-4">
+                <input asp-for="SalesTotal" class="form-control">
+                <span class="text-danger">@Html.ValidationMessageFor(model => model.SalesTotal)</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="DiscountRate" class="col-sm-2 col-form-label">Discount Rate:</label>
+            <div class="col-sm-4">
+                <input asp-for="DiscountRate" class="form-control" >
+                <span class="text-danger">@Html.ValidationMessageFor(model => model.DiscountRate)</span>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-10">
+                <button type="submit" class="btn btn-success">Calculate</button>
+                <a href="/Home/Index" class="btn btn-success ml-2">Reset</a>
+            </div>
+        </div>
+    </form>
+
+    @if (Model?.SalesTotal > 0)
+    {
+        <p>Discount Amount: $@Model.DiscountValue.ToString("0.00")</p>
+        <p>Final Total: $@Model.FinalTotal.ToString("0.00")</p>
+    }
+</div>

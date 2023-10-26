@@ -6,27 +6,23 @@ namespace Anshuman_Assignment_1.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-
-    public HomeController(ILogger<HomeController> logger)
-    {
-        _logger = logger;
-    }
-
+    [HttpGet]
     public IActionResult Index()
     {
-        return View();
+        return View(new PriceQuote());
     }
 
-    public IActionResult Privacy()
+    [HttpPost]
+    public IActionResult Calculate(PriceQuote model)
     {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        if (ModelState.IsValid)
+        {
+            return View("Index", model);
+        }
+        else
+        {
+            return View("Index");
+        }
     }
 }
 
